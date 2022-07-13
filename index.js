@@ -20,7 +20,7 @@ let cert1 = require('fs').readFileSync(__dirname + '/testFiles/AWS_SSO_for_Custo
 let cert = require('fs').readFileSync(__dirname + '/AWS_SSO_for_Custom SAML 2.0 application_certificate.pem', 'utf8')
 var samlStrategy = new SamlStrategy({
     //decryptionPvk: pvk,
-    callbackUrl: '/api/authorizeUser',
+    callbackUrl: 'http://43.204.223.103:3001/api/authorizeUser',
     entryPoint: 'https://d-9f672d0256.awsapps.com/start/',
     issuer:'Demo Service Provider',
     cert: cert1
