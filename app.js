@@ -21,7 +21,7 @@ var samlStrategy = new SamlStrategy({
     //callbackUrl: 'http://43.204.223.103:3001/api/login/callback',
     //callbackUrl: 'https://csrg.lightstorm.in/ltc/ssoapi/login/callback',
     //entryPoint:'https://portal.sso.ap-south-1.amazonaws.com/saml/assertion/MTAyODgxNzE3MjkyX2lucy02ZjZiMzYwMmJjYWM3NTFl',
-    entryPoint:"https://portal.sso.ap-south-1.amazonaws.com/saml/assertion/MzczNzYxNTEwMDExX2lucy1hYWYyNjdmZmU4NjhjNzNk",
+    entryPoint: "https://portal.sso.ap-south-1.amazonaws.com/saml/assertion/MzczNzYxNTEwMDExX2lucy1hYWYyNjdmZmU4NjhjNzNk",
     issuer: "https://portal.sso.ap-south-1.amazonaws.com/saml/assertion/MzczNzYxNTEwMDExX2lucy1hYWYyNjdmZmU4NjhjNzNk",
     logoutUrl: "https://portal.sso.ap-south-1.amazonaws.com/saml/logout/MzczNzYxNTEwMDExX2lucy1hYWYyNjdmZmU4NjhjNzNk",
     cert: cert1
@@ -42,16 +42,31 @@ app.get('/.well-known/pki-validation/:Id', (req, res) => res.sendFile(__dirname 
 app.get('/ssoapi',
     passport.authenticate('saml', { failureRedirect: '/login/fail' }),
     function (req, res) {
-        console.log("Api SSo was called")
-        res.redirect('/');
+        try {
+            console.log("Api SSo was called")
+            require('fs').writeFileSync(__dirname + '/dummy.txt', 'pi SSo was called"')
+            res.redirect('/');
+        } catch (error) {
+            res.redirect('/login/fail');
+
+        }
+
     }
 );
 
 app.post('/ssoapi/login/callback',
     passport.authenticate('saml', { failureRedirect: '/login/fail', failureFlash: true }),
     function (req, res) {
-        console.log('reqqqqqqqqq', req)
-        res.redirect('/');
+        try {
+            console.log('reqqqqqqqqq', req)
+            require('fs').writeFileSync(__dirname + '/dummy1.txt', 'pi SSo  Post was called"')
+
+            res.redirect('/');
+        } catch (error) {
+            res.redirect('/login/fail');
+
+        }
+
     }
 );
 
