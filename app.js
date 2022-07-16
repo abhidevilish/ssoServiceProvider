@@ -15,17 +15,15 @@ passport.deserializeUser(function (user, done) {
 });
 // app.use(express.urlencoded())
 
-let cert1 = require('fs').readFileSync(__dirname + '/testFiles/AWS_SSO_for_Custom SAML 2.0 application_certificate.pem', 'utf8')
+let cert1 = require('fs').readFileSync(__dirname + '/testAppFiles/AWS_SSO_for_Custom SAML 2.0 application_certificate.pem', 'utf8')
 
-let cert = require('fs').readFileSync(__dirname + '/AWS_SSO_for_Custom SAML 2.0 application_certificate.pem', 'utf8')
 var samlStrategy = new SamlStrategy({
-    //decryptionPvk: pvk,
     //callbackUrl: 'http://43.204.223.103:3001/api/login/callback',
     //callbackUrl: 'https://csrg.lightstorm.in/ltc/ssoapi/login/callback',
     //entryPoint:'https://portal.sso.ap-south-1.amazonaws.com/saml/assertion/MTAyODgxNzE3MjkyX2lucy02ZjZiMzYwMmJjYWM3NTFl',
-    entryPoint: 'https://portal.sso.ap-south-1.amazonaws.com/saml/assertion/MDYxNTg0ODc3NTQ4X2lucy1jNjUzODVlM2EwZTAxZjhm',
-    //issuer: 'https://portal.sso.ap-south-1.amazonaws.com/saml/assertion/MTAyODgxNzE3MjkyX2lucy02ZjZiMzYwMmJjYWM3NTFl',
-    //logoutUrl:'https://portal.sso.ap-south-1.amazonaws.com/saml/logout/MTAyODgxNzE3MjkyX2lucy02ZjZiMzYwMmJjYWM3NTFl',
+    entryPoint:"https://portal.sso.ap-south-1.amazonaws.com/saml/assertion/MzczNzYxNTEwMDExX2lucy1hYWYyNjdmZmU4NjhjNzNk",
+    issuer: "https://portal.sso.ap-south-1.amazonaws.com/saml/assertion/MzczNzYxNTEwMDExX2lucy1hYWYyNjdmZmU4NjhjNzNk",
+    logoutUrl: "https://portal.sso.ap-south-1.amazonaws.com/saml/logout/MzczNzYxNTEwMDExX2lucy1hYWYyNjdmZmU4NjhjNzNk",
     cert: cert1
 }, function (profile, done) {
     console.log('Profile: %j', profile);
@@ -41,10 +39,11 @@ app.get('/', (req, res) => res.send(`<p> AttemptedUrl </p>`))
 app.get('/.well-known/pki-validation/:Id', (req, res) => res.sendFile(__dirname + '/' + req.params.Id))
 
 
-app.get('/ssoapi/',
+app.get('/ssoapi',
     passport.authenticate('saml', { failureRedirect: '/login/fail' }),
     function (req, res) {
-        res.send('Hello World!');
+        console.log("Api SSo was called")
+        res.redirect('/');
     }
 );
 
