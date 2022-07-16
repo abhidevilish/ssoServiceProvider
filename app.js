@@ -34,7 +34,10 @@ passport.use(samlStrategy);
 
 app.get('/login/fail', (req, res) => res.send(`<p> test </p>`))
 
-app.get('/', (req, res) => res.send(`<p> AttemptedUrl </p>`))
+app.get('/', (req, res) => {
+    console.log("Application started")
+    res.send(`<p> AttemptedUrl </p>`)
+})
 
 app.get('/.well-known/pki-validation/:Id', (req, res) => res.sendFile(__dirname + '/' + req.params.Id))
 
@@ -44,7 +47,7 @@ app.get('/ssoapi',
     function (req, res) {
         try {
             console.log("Api SSo was called")
-            require('fs').writeFileSync(__dirname + '/dummy.txt', 'pi SSo was called"')
+            //require('fs').writeFileSync(__dirname + '/dummy.txt', 'pi SSo was called"')
             res.redirect('/');
         } catch (error) {
             res.redirect('/login/fail');
@@ -59,7 +62,7 @@ app.post('/ssoapi/login/callback',
     function (req, res) {
         try {
             console.log('reqqqqqqqqq', req)
-            require('fs').writeFileSync(__dirname + '/dummy1.txt', 'pi SSo  Post was called"')
+            //require('fs').writeFileSync(__dirname + '/dummy1.txt', 'pi SSo  Post was called"')
 
             res.redirect('/');
         } catch (error) {
