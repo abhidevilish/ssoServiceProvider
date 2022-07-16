@@ -19,7 +19,7 @@ let cert1 = require('fs').readFileSync(__dirname + '/testAppFiles/AWS_SSO_for_Cu
 
 var samlStrategy = new SamlStrategy({
     //callbackUrl: 'http://43.204.223.103:3001/api/login/callback',
-    //callbackUrl: 'https://csrg.lightstorm.in/ltc/ssoapi/login/callback',
+    callbackUrl: 'https://43.204.237.53/ssoapi/login/callback',
     //entryPoint:'https://portal.sso.ap-south-1.amazonaws.com/saml/assertion/MTAyODgxNzE3MjkyX2lucy02ZjZiMzYwMmJjYWM3NTFl',
     entryPoint: "https://portal.sso.ap-south-1.amazonaws.com/saml/assertion/MzczNzYxNTEwMDExX2lucy1hYWYyNjdmZmU4NjhjNzNk",
     issuer: "https://portal.sso.ap-south-1.amazonaws.com/saml/assertion/MzczNzYxNTEwMDExX2lucy1hYWYyNjdmZmU4NjhjNzNk",
@@ -35,7 +35,7 @@ passport.use(samlStrategy);
 app.get('/login/fail', (req, res) => res.send(`<p> test </p>`))
 
 app.get('/', (req, res) => {
-    console.log("Application started",req.headers,req.queryString)
+    console.log("Application started", req.headers, req.queryString)
     res.send(`<p> AttemptedUrl </p>`)
 })
 
