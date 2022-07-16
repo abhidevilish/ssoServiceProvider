@@ -35,7 +35,7 @@ passport.use(samlStrategy);
 app.get('/login/fail', (req, res) => res.send(`<p> test </p>`))
 
 app.get('/', (req, res) => {
-    console.log("Application started")
+    console.log("Application started",req.headers,req.queryString)
     res.send(`<p> AttemptedUrl </p>`)
 })
 
