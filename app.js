@@ -7,10 +7,12 @@ const constants = require('./constants')
 
 app.use(express.json())
 passport.serializeUser(function (user, done) {
+    console.log('userrrrrrrrrrrr',user)
     done(null, user);
 });
 
 passport.deserializeUser(function (user, done) {
+    console.log('userrrrrrrrrrrr1111111111111',user)
     done(null, user);
 });
 // app.use(express.urlencoded())
@@ -35,7 +37,7 @@ passport.use(samlStrategy);
 app.get('/login/fail', (req, res) => res.send(`<p> test </p>`))
 
 app.get('/', (req, res) => {
-    console.log("Application started", req.headers, req.queryString)
+    console.log("Application started", req.headers, req.user)
     res.send(`<p> AttemptedUrl </p>`)
 })
 
@@ -43,10 +45,13 @@ app.get('/.well-known/pki-validation/:Id', (req, res) => res.sendFile(__dirname 
 
 
 app.get('/ssoapi',
-    passport.authenticate('saml', { failureRedirect: '/login/fail' }),
+    //passport.authenticate('saml', { failureRedirect: '/login/fail' }),
     function (req, res) {
         try {
             console.log("Api SSo was called")
+            res.type('application/xml');
+
+            samlStrategy.generateServiceProviderMetadata(cert1)
             //require('fs').writeFileSync(__dirname + '/dummy.txt', 'pi SSo was called"')
             res.redirect('/');
         } catch (error) {
