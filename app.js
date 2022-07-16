@@ -38,7 +38,7 @@ app.get('/login/fail', (req, res) => res.send(`<p> test </p>`))
 
 app.get('/', (req, res) => res.send(`<p> AttemptedUrl </p>`))
 
-app.get('/.well-known/pki-validation/:Id', (req, res) => res.sendFile(__dirname + '/' + Id))
+app.get('/.well-known/pki-validation/:Id', (req, res) => res.sendFile(__dirname + '/' + req.params.Id))
 
 
 app.get('/ssoapi/',
