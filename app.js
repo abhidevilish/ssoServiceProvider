@@ -15,7 +15,7 @@ passport.deserializeUser(function (user, done) {
 });
 // app.use(express.urlencoded())
 
-let cert1 = require('fs').readFileSync(__dirname + '/testAppFiles/AWS_SSO_for_Custom SAML 2.0 application_certificate.pem', 'utf8')
+let cert1 = require('fs').readFileSync(__dirname + '/testAppFiles/AWS_SSO_for_Custom SAML 2.0 application_certificate2.pem', 'utf8')
 
 var samlStrategy = new SamlStrategy({
     //callbackUrl: 'http://43.204.223.103:3001/api/login/callback',
