@@ -23,7 +23,7 @@ var samlStrategy = new SamlStrategy({
     //callbackUrl: 'http://43.204.223.103:3001/api/login/callback',
     callbackUrl: 'https://43.204.237.53/ssoapi/login/callback',
     //entryPoint:'https://portal.sso.ap-south-1.amazonaws.com/saml/assertion/MTAyODgxNzE3MjkyX2lucy02ZjZiMzYwMmJjYWM3NTFl',
-    entryPoint: "https://portal.sso.ap-south-1.amazonaws.com/saml/assertion/MzczNzYxNTEwMDExX2lucy1hYWYyNjdmZmU4NjhjNzNk",
+    entryPoint: "https://d-9f672cf8b6.awsapps.com/start#/",
     issuer: "https://portal.sso.ap-south-1.amazonaws.com/saml/assertion/MzczNzYxNTEwMDExX2lucy1hYWYyNjdmZmU4NjhjNzNk",
     logoutUrl: "https://portal.sso.ap-south-1.amazonaws.com/saml/logout/MzczNzYxNTEwMDExX2lucy1hYWYyNjdmZmU4NjhjNzNk",
     cert: cert1
@@ -45,7 +45,7 @@ app.get('/.well-known/pki-validation/:Id', (req, res) => res.sendFile(__dirname 
 
 
 app.get('/ssoapi',
-    //passport.authenticate('saml', { failureRedirect: '/login/fail' }),
+    passport.authenticate('saml', { failureRedirect: '/login/fail' }),
     function (req, res) {
         try {
             console.log("Api SSo was called")
