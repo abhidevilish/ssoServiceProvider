@@ -6,6 +6,7 @@ const pool = require('./db')
 const constants = require('./constants')
 const expressSession = require('express-session')
 const xml2js = require('xml2js');
+const flash = require('connect-flash')
 
 
 
@@ -47,10 +48,13 @@ var samlStrategy = new SamlStrategy({
 passport.use(samlStrategy);
 app.use(passport.initialize());
 app.use(passport.session());
-app.get('/login/fail', (req, res) => res.send(`<p> test </p>`))
+app.use(flash())
+app.get('/login/fail', (req, res) => res.send(`${req.flash("error")} <p> test </p>`))
 
 app.get('/', (req, res) => {
-    res.send(`<p> AttemptedUrl </p>`)
+    res.send(
+        `${req.flash("info")}
+    <p> AttemptedUrl </p>`)
 })
 
 app.get('/.well-known/pki-validation/:Id', (req, res) => res.sendFile(__dirname + '/' + req.params.Id))
@@ -63,7 +67,7 @@ app.get('/ssoapi',
             console.log("Api SSo was called")
             res.type('application/xml');
 
-            samlStrategy.generateServiceProviderMetadata(cert1)
+            //samlStrategy.generateServiceProviderMetadata(cert1)
             //require('fs').writeFileSync(__dirname + '/dummy.txt', 'pi SSo was called"')
             res.redirect('/');
         } catch (error) {
@@ -75,18 +79,21 @@ app.get('/ssoapi',
 );
 
 app.post('/ssoapi/login/callback',
-    //passport.authenticate('saml', { failureRedirect: '/login/fail', failureFlash: true }),
+    passport.authenticate('saml', { failureRedirect: '/login/fail', failureFlash: true }),
     async function (req, res) {
         try {
             console.log('reqqqqqqqqq', req.headers)
-            console.log('reqqqqqqqqq bodyyyyyyyyyyyyyy', req.body)
-            let xmlData = Buffer.from(req.body.SAMLResponse).toString()
-            let data = await xml2js.parseString(xmlData)
-            console.log('dataaaaaaaaaaaaaaaa', data)
-            //require('fs').writeFileSync(__dirname + '/dummy1.txt', 'pi SSo  Post was called"')
+            let xmlData = Buffer.from(req.body.SAMLResponse, 'base64').toString()
+            //console.log('xmlData', xmlData)
+            let email = await parseXml(xmlData)
+            req.flash('info', `Welcome ${email}`)
+            res.redirect('/')
+            //add the email validation logic here in index.js
 
-            res.send(JSON.stringify(req.body));
+            //res.send(JSON.stringify(req.body));
         } catch (error) {
+            console.log('error', error)
+            req.flash('error', 'Access Denied')
             res.redirect('/login/fail');
 
         }
@@ -115,3 +122,21 @@ app.post('/ssoapi/login/callback',
 
 
 app.listen(constants.PORT_NO, () => console.log("Server is listening on port", constants.PORT_NO))
+
+
+async function parseXml(xmlData) {
+    return new Promise((resolve, reject) => {
+        let parser = new xml2js.Parser();
+        parser.parseString(xmlData, function (err, result) {
+            //Extract the value from the data element
+            //extractedData = result['config']['data'];
+            if (err) {
+                reject(err)
+            } else {
+                resolve(result["saml2p:Response"]["saml2:Assertion"][0]["saml2:Subject"][0]["saml2:NameID"][0]["_"]);
+
+            }
+            //console.log(result);
+        })
+    })
+}
