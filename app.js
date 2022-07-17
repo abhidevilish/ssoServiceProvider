@@ -70,7 +70,7 @@ app.post('/ssoapi/login/callback',
 
             //require('fs').writeFileSync(__dirname + '/dummy1.txt', 'pi SSo  Post was called"')
 
-            res.redirect('/');
+            res.send(JSON.stringify(req.body));
         } catch (error) {
             res.redirect('/login/fail');
 
