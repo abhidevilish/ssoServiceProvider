@@ -75,12 +75,13 @@ app.get('/ssoapi',
 );
 
 app.post('/ssoapi/login/callback',
-    passport.authenticate('saml', { failureRedirect: '/login/fail', failureFlash: true }),
+    //passport.authenticate('saml', { failureRedirect: '/login/fail', failureFlash: true }),
     async function (req, res) {
         try {
             console.log('reqqqqqqqqq', req.headers)
             console.log('reqqqqqqqqq bodyyyyyyyyyyyyyy', req.body)
-            let data = await xml2js.parseString(req.body.SAMLResponse)
+            let xmlData = Buffer.from(req.body.SAMLResponse).toString()
+            let data = await xml2js.parseString(xmlData)
             console.log('dataaaaaaaaaaaaaaaa', data)
             //require('fs').writeFileSync(__dirname + '/dummy1.txt', 'pi SSo  Post was called"')
 
