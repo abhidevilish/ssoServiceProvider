@@ -6,16 +6,16 @@ const pool = require('./db')
 const constants = require('./constants')
 
 app.use(express.json())
-passport.serializeUser(function (user, done) {
-    console.log('userrrrrrrrrrrr', user)
-    done(null, user);
-});
+// passport.serializeUser(function (user, done) {
+//     console.log('userrrrrrrrrrrr', user)
+//     done(null, user);
+// });
 
-passport.deserializeUser(function (user, done) {
-    console.log('userrrrrrrrrrrr1111111111111', user)
-    done(null, user);
-});
-// app.use(express.urlencoded())
+// passport.deserializeUser(function (user, done) {
+//     console.log('userrrrrrrrrrrr1111111111111', user)
+//     done(null, user);
+// });
+app.use(express.urlencoded())
 
 let cert1 = require('fs').readFileSync(__dirname + '/testAppFiles/AWS_SSO_for_Custom SAML 2.0 application_certificate2.pem', 'utf8')
 
@@ -66,6 +66,8 @@ app.post('/ssoapi/login/callback',
     function (req, res) {
         try {
             console.log('reqqqqqqqqq', req.headers)
+            console.log('reqqqqqqqqq bodyyyyyyyyyyyyyy', req.body)
+
             //require('fs').writeFileSync(__dirname + '/dummy1.txt', 'pi SSo  Post was called"')
 
             res.redirect('/');
