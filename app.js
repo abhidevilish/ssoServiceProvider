@@ -7,12 +7,12 @@ const constants = require('./constants')
 
 app.use(express.json())
 passport.serializeUser(function (user, done) {
-    console.log('userrrrrrrrrrrr',user)
+    console.log('userrrrrrrrrrrr', user)
     done(null, user);
 });
 
 passport.deserializeUser(function (user, done) {
-    console.log('userrrrrrrrrrrr1111111111111',user)
+    console.log('userrrrrrrrrrrr1111111111111', user)
     done(null, user);
 });
 // app.use(express.urlencoded())
@@ -37,7 +37,6 @@ passport.use(samlStrategy);
 app.get('/login/fail', (req, res) => res.send(`<p> test </p>`))
 
 app.get('/', (req, res) => {
-    console.log("Application started", req.headers, req.user)
     res.send(`<p> AttemptedUrl </p>`)
 })
 
@@ -66,7 +65,7 @@ app.post('/ssoapi/login/callback',
     passport.authenticate('saml', { failureRedirect: '/login/fail', failureFlash: true }),
     function (req, res) {
         try {
-            console.log('reqqqqqqqqq', req.body)
+            console.log('reqqqqqqqqq', req.headers)
             //require('fs').writeFileSync(__dirname + '/dummy1.txt', 'pi SSo  Post was called"')
 
             res.redirect('/');
