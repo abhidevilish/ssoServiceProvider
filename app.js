@@ -5,6 +5,7 @@ const app = express()
 const pool = require('./db')
 const constants = require('./constants')
 const expressSession = require('express-session')
+const xml2js = require('xml2js');
 
 
 
@@ -79,7 +80,8 @@ app.post('/ssoapi/login/callback',
         try {
             console.log('reqqqqqqqqq', req.headers)
             console.log('reqqqqqqqqq bodyyyyyyyyyyyyyy', req.body)
-
+            let data = await xml2js.parseString(req.body.SAMLResponse)
+            console.log('dataaaaaaaaaaaaaaaa', data)
             //require('fs').writeFileSync(__dirname + '/dummy1.txt', 'pi SSo  Post was called"')
 
             res.send(JSON.stringify(req.body));
