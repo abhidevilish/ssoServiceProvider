@@ -62,7 +62,7 @@ app.get('/ssoapi',
 );
 
 app.post('/ssoapi/login/callback',
-    passport.authenticate('saml', { failureRedirect: '/login/fail', failureFlash: true }),
+    //passport.authenticate('saml', { failureRedirect: '/login/fail', failureFlash: true }),
     function (req, res) {
         try {
             console.log('reqqqqqqqqq', req.headers)
