@@ -4,7 +4,14 @@ const express = require('express');
 const app = express()
 const pool = require('./db')
 const constants = require('./constants')
+const expressSession = require('express-session')
 
+
+app.use(session({
+    resave: false,
+    saveUninitialized: true,
+    secret: 'cat'
+}));
 app.use(express.json())
 // passport.serializeUser(function (user, done) {
 //     console.log('userrrrrrrrrrrr', user)
@@ -32,6 +39,8 @@ var samlStrategy = new SamlStrategy({
     return done(null, profile);
 });
 
+app.use(passport.initialize());
+app.use(passport.session());
 passport.use(samlStrategy);
 
 app.get('/login/fail', (req, res) => res.send(`<p> test </p>`))
