@@ -7,7 +7,7 @@ const constants = require('./constants')
 const expressSession = require('express-session')
 
 
-app.use(session({
+app.use(expressSession({
     resave: false,
     saveUninitialized: true,
     secret: 'cat'
@@ -39,10 +39,10 @@ var samlStrategy = new SamlStrategy({
     return done(null, profile);
 });
 
+
+passport.use(samlStrategy);
 app.use(passport.initialize());
 app.use(passport.session());
-passport.use(samlStrategy);
-
 app.get('/login/fail', (req, res) => res.send(`<p> test </p>`))
 
 app.get('/', (req, res) => {
