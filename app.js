@@ -7,22 +7,25 @@ const constants = require('./constants')
 const expressSession = require('express-session')
 
 
+
+app.use(express.json())
+
+app.use(express.urlencoded())
 app.use(expressSession({
     resave: false,
     saveUninitialized: true,
     secret: 'cat'
 }));
-app.use(express.json())
-// passport.serializeUser(function (user, done) {
-//     console.log('userrrrrrrrrrrr', user)
-//     done(null, user);
-// });
 
-// passport.deserializeUser(function (user, done) {
-//     console.log('userrrrrrrrrrrr1111111111111', user)
-//     done(null, user);
-// });
-app.use(express.urlencoded())
+passport.serializeUser(function (user, done) {
+    console.log('userrrrrrrrrrrr', user)
+    done(null, user);
+});
+
+passport.deserializeUser(function (user, done) {
+    console.log('userrrrrrrrrrrr1111111111111', user)
+    done(null, user);
+});
 
 let cert1 = require('fs').readFileSync(__dirname + '/testAppFiles/AWS_SSO_for_Custom SAML 2.0 application_certificate2.pem', 'utf8')
 
