@@ -57,7 +57,7 @@ app.get('/', (req, res) => {
     <p> AttemptedUrl </p>`)
 })
 
-app.get('/.well-known/pki-validation/:Id', (req, res) => res.sendFile(__dirname + '/' + req.params.Id))
+app.get('/.well-known/pki-validation/0FADCCD26812750989FA3E1DF7D9A62D.txt', (req, res) => res.sendFile(__dirname + '/0FADCCD26812750989FA3E1DF7D9A62D.txt' ))
 
 
 app.get('/ssoapi',
