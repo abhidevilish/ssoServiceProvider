@@ -35,7 +35,7 @@ var samlStrategy = new SamlStrategy({
     //callbackUrl: 'http://43.204.223.103:3001/api/login/callback',
     callbackUrl: 'https://43.204.223.103/ssoapi/login/callback',
     //entryPoint:'https://portal.sso.ap-south-1.amazonaws.com/saml/assertion/MTAyODgxNzE3MjkyX2lucy02ZjZiMzYwMmJjYWM3NTFl',
-    entryPoint: "https://d-9f672cf8b6.awsapps.com/start#/",
+    entryPoint: "https://d-9f672d0256.awsapps.com/start",
     issuer: "https://portal.sso.ap-south-1.amazonaws.com/saml/assertion/MDYxNTg0ODc3NTQ4X2lucy1jNjUzODVlM2EwZTAxZjhm",
     logoutUrl: "https://portal.sso.ap-south-1.amazonaws.com/saml/logout/MDYxNTg0ODc3NTQ4X2lucy1jNjUzODVlM2EwZTAxZjhm",
     cert: cert1
